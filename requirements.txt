@@ -54,7 +54,6 @@ PySocks==1.7.1
 pytest==7.4.0
 pytest-check==2.2.0
 python-dateutil==2.8.2
-pywin32==306
 pyzmq==25.1.0
 requests==2.31.0
 requests-file==1.5.1
