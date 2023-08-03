@@ -1,10 +1,9 @@
 from flask import Flask,  request, jsonify, render_template
-from flask_pymongo import PyMongo, ObjectId
 from flask_cors import CORS
-from pymongo import MongoClient
 import certifi
 import models
-
+from pymongo import MongoClient
+from flask_pymongo import PyMongo, ObjectId
 
 app = Flask(__name__, static_folder = './build', static_url_path='/')
 
@@ -15,10 +14,9 @@ file_path = 'mongoDBuri.txt'
 with open(file_path, 'r') as file:
     data = file.read()
 
-
 app.config['MONGO_URI'] = data
 mongo = PyMongo(app)
-client = MongoClient(data, tlsCAFile=certifi.where())
+client = MongoClient(data)
 db = client.APAD_app
 CORS(app)
 
