@@ -1,33 +1,7 @@
 from flask import Flask,  request, jsonify, render_template
 import uuid
-from passlib.hash import pbkdf2_sha256
-#from app import db, projectId, name
-from cryptography.fernet import Fernet
-import base64
+from app import db, projectId, name
 import bcrypt
-
-projectId = 0
-name = ""
-
-file_path = 'mongoDBuri.txt'
-with open(file_path,'r') as file:
-    uri = file.read()
-
-app.config['MONGO_URI'] = 'mongodb://localhost/APAD_app'
-mongo = PyMongo(app)
-client = MongoClient(uri, tlsCAFile=certifi.where())
-db = client.APAD_app
-
-#key = Fernet.generate_key()
-#f = Fernet(key)
-key = "B3cpAFLjfjWG41S5pXyC19WBWalycnMXmaE4Zg99TSs="
-#projectId = 0
-
-#with open('mykey.key', 'wb') as mykey:
-   #mykey.write(key)
-
-#with open('mykey.key', 'rb') as mykey:
-   #key = mykey.read()
 
 class user:
    
@@ -47,7 +21,7 @@ class user:
           b = bcrypt.checkpw(userdetails['password'].encode('utf-8'), document["password"])
           if(document["email"] == userdetails['email'] and bcrypt.checkpw(userdetails['password'].encode('utf-8'), document["password"])):
             global name 
-            name = document["firstName"] + " " + document["lastName"]
+            name = document["email"]
             flag+=1
             return jsonify({'msg': "SignIn succcessful"})
       #if db.users.find_one({"email": userdetails['email'], "password": userdetails['password']}):
@@ -59,7 +33,7 @@ class user:
       
 
    def createNewUser(self):
-        f = Fernet(key)
+    
         confirmPassword = request.json['confirmPassword']
         newUser = {
             '_id': uuid.uuid4().hex,
@@ -83,13 +57,22 @@ class user:
 
                 if db.users.insert_one(newUser):
                     global name
-                    name = newUser["firstName"] + " " + newUser["lastName"]
+                    name = newUser["email"]
                     return jsonify({'msg': "User Added Successfully"})     
                 else:
                     return jsonify({'error': "error creating new user"})
             else:
                 return jsonify({'error': "Both the passwords are not matching"}), 400
-        
+            
+            
+   def logout(self) :
+               
+        global projectId
+        projectId = 0
+        global name 
+        name = ""
+        return jsonify({'msg': "logout successfull"}) 
+
 
 class project:
 
@@ -147,6 +130,16 @@ class project:
             return jsonify({'error': "Error creating project"})
        
 
+    def getsignin(self):
+
+        if name == "" :
+            return jsonify({'error': "Not signed in"}), 400
+
+        else :
+            return jsonify({'msg': "signed in"}), 200
+
+       
+
 
 class dashboard:
 
@@ -198,7 +191,7 @@ class dashboard:
         }
 
         if projectId == 0 :
-            return jsonify({"value": response})
+            return jsonify({'error': "Not signed in"}), 400
         else :
             project_id = db.projects.find_one({"_id": projectId})
             if project_id :
@@ -220,7 +213,8 @@ class dashboard:
             if "members" in project_id :
                 members = project_id["members"]
                 return jsonify(members)
-  
+            else :
+                return jsonify("not logged in")
 
     def checkout(self):
         
