@@ -6,21 +6,25 @@ import certifi
 import models
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder = './build', static_url_path='/')
 
 projectId = 0
 name = ""
 
-file_path = 'mongoDBURL.txt' 
+file_path = 'mongoDBuri.txt' 
 with open(file_path, 'r') as file:
     data = file.read()
 
 
-app.config['MONGO_URI'] = 'mongodb://localhost/APAD_app'
+app.config['MONGO_URI'] = data
 mongo = PyMongo(app)
 client = MongoClient(data, tlsCAFile=certifi.where())
 db = client.APAD_app
 CORS(app)
+
+@app.route('/')
+def Home():
+    return app.send_static_file('index.html')
 
 @app.route('/signIn', methods=['POST'])
 def signIn():
