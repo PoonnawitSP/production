@@ -1,10 +1,22 @@
 from flask import Flask,  request, jsonify, render_template
 import uuid
 from passlib.hash import pbkdf2_sha256
-from app import db, projectId, name
+#from app import db, projectId, name
 from cryptography.fernet import Fernet
 import base64
 import bcrypt
+
+projectId = 0
+name = ""
+
+file_path = 'mongoDBuri.txt'
+with open(file_path,'r') as file:
+    uri = file.read()
+
+app.config['MONGO_URI'] = 'mongodb://localhost/APAD_app'
+mongo = PyMongo(app)
+client = MongoClient(uri, tlsCAFile=certifi.where())
+db = client.APAD_app
 
 #key = Fernet.generate_key()
 #f = Fernet(key)
