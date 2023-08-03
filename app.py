@@ -16,10 +16,6 @@ file_path = 'mongoDBuri.txt'
 with open(file_path,'r') as file:
     uri = file.read()
 
-app.listen(process.env.PORT || 3000, function(){
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-});
-
 app.config['MONGO_URI'] = 'mongodb://localhost/APAD_app'
 mongo = PyMongo(app)
 client = MongoClient(uri, tlsCAFile=certifi.where())
