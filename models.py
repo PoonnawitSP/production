@@ -3,20 +3,7 @@ import uuid
 import bcrypt
 from pymongo import MongoClient
 from flask_pymongo import PyMongo, ObjectId
-
-app = Flask(__name__, static_folder = './build', static_url_path='/')
-
-projectId = 0
-name = ""
-
-file_path = 'mongoDBuri.txt' 
-with open(file_path, 'r') as file:
-    data = file.read()
-
-app.config['MONGO_URI'] = data
-mongo = PyMongo(app)
-client = MongoClient(data)
-db = client.APAD_app
+from app import db, name, projectId
 
 class user:
    
