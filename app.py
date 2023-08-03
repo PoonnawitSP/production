@@ -6,24 +6,21 @@ import certifi
 import models
 
 
-app = Flask(__name__, static_folder = './build', static_url_path='/')    #if code does not work, try deleting /build folder, then run npm run build || or ||rename App.js and adjust import App from .... in index.js 
-CORS(app)
+app = Flask(__name__)
 
 projectId = 0
 name = ""
 
-file_path = 'mongoDBuri.txt'
-with open(file_path,'r') as file:
-    uri = file.read()
+file_path = 'mongoDBURL.txt' 
+with open(file_path, 'r') as file:
+    data = file.read()
+
 
 app.config['MONGO_URI'] = 'mongodb://localhost/APAD_app'
 mongo = PyMongo(app)
-client = MongoClient(uri, tlsCAFile=certifi.where())
+client = MongoClient(data, tlsCAFile=certifi.where())
 db = client.APAD_app
-
-@app.route('/')
-def Home():
-    return app.send_static_file('index.html')
+CORS(app)
 
 @app.route('/signIn', methods=['POST'])
 def signIn():
@@ -73,7 +70,13 @@ def getdetails():
 def getmembers():
     return models.dashboard().getmembers()
 
+@app.route('/getsignin', methods=['GET'])
+def getsignin():
+    return models.project().getsignin()
 
+@app.route('/logout', methods=['GET'])
+def logout():
+    return models.user().logout()
 
 if __name__ == '__main__':
     app.run(debug=True)
