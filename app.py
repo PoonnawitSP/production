@@ -1,7 +1,6 @@
 from flask import Flask,  request, jsonify, render_template
 from flask_cors import CORS
 import certifi
-import models
 from pymongo import MongoClient
 from flask_pymongo import PyMongo, ObjectId
 import uuid
