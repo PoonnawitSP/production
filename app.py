@@ -1,23 +1,22 @@
 from flask import Flask,  request, jsonify
 from flask_cors import CORS
-#import certifi
+import certifi
 from pymongo import MongoClient
 import uuid
 import bcrypt
-import os
+#import os
 
 app = Flask(__name__, static_folder = './build', static_url_path='/')
 
 projectId = 0
 name = ""
 
-mongodb_uri = os.environ.get('MONGODB_URI')
-#client = MongoClient("mongodb+srv://poonnawitsu:sFUJXWSdC4yNsPPf@cluster0.udno3ul.mongodb.net/?retryWrites=true&w=majority", tlsCAFile=certifi.where() )
-client = MongoClient('MONGODB_URI')
+#mongodb_uri = os.environ.get('MONGODB_URI')gi
+client = MongoClient("mongodb+srv://poonnawitsu:sFUJXWSdC4yNsPPf@cluster0.udno3ul.mongodb.net/?retryWrites=true&w=majority", tlsCAFile=certifi.where() )
+#client = MongoClient('MONGODB_URI')
 db = client.APAD_app
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type' 
-
 
 class user:
    
