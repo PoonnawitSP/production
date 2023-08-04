@@ -530,7 +530,7 @@ class dashboard:
 
 
 @app.route('/')
-def Home():
+def home():
     return app.send_static_file('index.html')
 
 @app.route('/signIn', methods=['POST'])
