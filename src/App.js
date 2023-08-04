@@ -8,7 +8,6 @@ import { ToastContainer } from "react-toastify";
 import CreateNewUser from './CreateNewUser';
 import Dashboard from './Dashboard'
 import NewProject from './NewProject'
-import PrivateRoute from "./PrivateRoute";
 
 
 
@@ -24,14 +23,14 @@ function App() {
     <div className="App">
      
       <Router>
-      <Routes>
-        <Route path="/" element={<Navigate replace to="/signIn" />} />
-        <Route exact path="/signIn" Component={SignIn}></Route>
-        <Route exact path="/login" Component={Login}></Route>
-        <Route path="/createNewUser" Component={CreateNewUser}/> 
-        <Route path="/dashboard" Component={Dashboard} />
-        <Route path="/createNewProject" Component={NewProject}></Route>
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Navigate replace to="/signIn" />} />
+          <Route exact path="/signIn" Component={SignIn}></Route>
+          <Route exact path="/login" Component={Login}></Route>
+          <Route path="/createNewUser" Component={CreateNewUser}/> 
+          <Route path="/dashboard" Component={Dashboard} />
+          <Route path="/createNewProject" Component={NewProject}></Route>
+        </Routes>
       </Router>
 
       <ToastContainer 
