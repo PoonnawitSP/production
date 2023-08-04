@@ -20,7 +20,8 @@ name = ""
 #mongo = PyMongo(app)
 client = MongoClient("mongodb+srv://poonnawitsu:sFUJXWSdC4yNsPPf@cluster0.udno3ul.mongodb.net/?retryWrites=true&w=majority", tlsCAFile=certifi.where() )
 db = client.APAD_app
-CORS(app)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type' 
 
 
 class user:
@@ -598,4 +599,4 @@ def not_found(e):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=False, port = 80)
+    app.run(host='0.0.0.0', debug=False, port=80)
