@@ -11,6 +11,7 @@ import NewProject from './NewProject'
 import PrivateRoute from "./PrivateRoute";
 
 
+
 function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
