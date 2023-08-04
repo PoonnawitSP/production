@@ -1,11 +1,9 @@
-from flask import Flask,  request, jsonify, render_template
+from flask import Flask,  request, jsonify
 from flask_cors import CORS
 import certifi
 from pymongo import MongoClient
-from flask_pymongo import PyMongo, ObjectId
 import uuid
 import bcrypt
-import os
 
 app = Flask(__name__, static_folder = './build', static_url_path='/')
 
